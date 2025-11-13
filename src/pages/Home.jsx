@@ -15,15 +15,23 @@ const Home = () => {
     const fetchCars = async () => {
       try {
         const res = await axiosInstance.get("/cars");
-        // Sort by newest first
-        setCars(res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+        if (res.data && Array.isArray(res.data)) {
+          // Sort by newest first
+          const sortedCars = res.data.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          );
+          setCars(sortedCars);
+        } else {
+          toast.error("No car data found from the server.");
+        }
       } catch (error) {
         console.error(error);
-        toast.error("Failed to fetch cars.");
+        toast.error("Failed to fetch cars from backend.");
       } finally {
         setLoading(false);
       }
     };
+
     fetchCars();
   }, []);
 
@@ -63,8 +71,6 @@ const Home = () => {
         )}
       </section>
 
-     
-
       {/* Top Rated Cars (Show only 3) */}
       <section className="max-w-7xl mx-auto px-6">
         <h2 className="text-3xl font-bold text-red-900 mb-6">Top Rated Cars</h2>
@@ -83,7 +89,6 @@ const Home = () => {
             title="John Doe"
             description="RentWheels made my trip so easy! Great service and smooth booking."
           />
-          
         </div>
       </section>
     </div>
