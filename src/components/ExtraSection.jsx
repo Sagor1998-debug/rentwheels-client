@@ -11,7 +11,7 @@ const benefits = [
 const ExtraSection = () => {
   return (
     <div className="max-w-6xl mx-auto py-16 px-6">
-      <h2 className="text-3xl font-bold text-center mb-10 text-blue-600">Why Rent With Us</h2>
+      <h2 className="text-3xl font-bold text-center mb-10 text-lime-950">Why Rent With Us</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {benefits.map((item, index) => (
           <motion.div

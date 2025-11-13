@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CarCard = ({ car }) => {
   return (
-    <div className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition">
+    <div className="bg-sky-200 shadow-md rounded-xl overflow-hidden hover:shadow-xl transition">
       <img
         src={car.imageUrl}
         alt={car.name}
@@ -26,7 +26,7 @@ const CarCard = ({ car }) => {
         </p>
         <Link
           to={`/cars/${car._id}`}
-          className="inline-block mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="inline-block mt-2 px-4 py-2 bg-rose-700 text-white rounded hover:bg-amber-800"
         >
           View Details
         </Link>
