@@ -22,7 +22,7 @@ const Navbar = () => {
 
   return (
     
-    <nav className="bg-[#4d4d4d] px-4 md:px-12 py-4 flex justify-between items-center h-20 relative"> 
+    <nav className="bg-emerald-800 px-4 md:px-12 py-4 flex justify-between items-center h-20 relative"> 
       
       {/* 1. Logo Section */}
       <Link to="/" className="flex items-center space-x-2">
@@ -35,7 +35,7 @@ const Navbar = () => {
         />
         
         {/* Text Logo */}
-        <span className="text-3xl font-bold text-[#ffae00]">
+        <span className="text-3xl font-bold text-bg-stone-600">
           CarRentWheels
         </span>
       </Link>
