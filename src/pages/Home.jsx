@@ -51,7 +51,7 @@ const Home = () => {
 
       {/* Featured Cars (Show only 6) */}
       <section className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-blue-600 mb-6">Featured Cars</h2>
+        <h2 className="text-3xl font-bold text-rose-950 mb-6">Featured Cars</h2>
         {filteredCars.length === 0 ? (
           <p className="text-gray-500">No cars found.</p>
         ) : (
@@ -67,7 +67,7 @@ const Home = () => {
 
       {/* Top Rated Cars (Show only 3) */}
       <section className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-blue-600 mb-6">Top Rated Cars</h2>
+        <h2 className="text-3xl font-bold text-red-900 mb-6">Top Rated Cars</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {cars.slice(0, 3).map((car) => (
             <CarCard key={car._id} car={car} />
@@ -77,7 +77,7 @@ const Home = () => {
 
       {/* Customer Testimonials */}
       <section className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-bold text-blue-600 mb-6">Customer Testimonials</h2>
+        <h2 className="text-3xl font-bold text-amber-600 mb-6">Customer Testimonials</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ExtraSection
             title="John Doe"
