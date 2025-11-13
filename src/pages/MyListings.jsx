@@ -8,14 +8,15 @@ const MyListings = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch cars posted by the logged-in user
   const fetchMyCars = async () => {
-    if (!user) return;
+    if (!user) return; // wait until user is loaded
     try {
       setLoading(true);
-      const res = await axiosInstance.get(`/cars/my-listings?email=${user.email}`);
+      const res = await axiosInstance.get("/cars/my-listings"); // no email query needed
       setCars(res.data);
     } catch (error) {
-      console.error(error);
+      console.error("Fetching my listings failed:", error);
       toast.error(error.response?.data?.message || "Failed to fetch your listings.");
     } finally {
       setLoading(false);
@@ -23,21 +24,27 @@ const MyListings = () => {
   };
 
   useEffect(() => {
-    fetchMyCars();
+    if (user) {
+      fetchMyCars(); // only fetch when user exists
+    }
   }, [user]);
 
+  // Delete car
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure to delete this car?")) return;
-
     try {
       await axiosInstance.delete(`/cars/${id}`);
       toast.success("Car deleted successfully!");
       setCars(cars.filter((car) => car._id !== id));
     } catch (error) {
-      console.error(error);
+      console.error("Deleting car failed:", error);
       toast.error(error.response?.data?.message || "Failed to delete car.");
     }
   };
+
+  if (!user) {
+    return <p className="text-center mt-6">Please login to see your listings.</p>;
+  }
 
   return (
     <div className="max-w-5xl mx-auto p-6">
