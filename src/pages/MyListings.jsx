@@ -8,12 +8,11 @@ const MyListings = () => {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch cars posted by the logged-in user
   const fetchMyCars = async () => {
-    if (!user) return; // wait until user is loaded
+    if (!user?.email) return;
     try {
       setLoading(true);
-      const res = await axiosInstance.get("/cars/my-listings"); // no email query needed
+      const res = await axiosInstance.get("/cars/my-listings");
       setCars(res.data);
     } catch (error) {
       console.error("Fetching my listings failed:", error);
@@ -24,12 +23,9 @@ const MyListings = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchMyCars(); // only fetch when user exists
-    }
+    if (user?.email) fetchMyCars();
   }, [user]);
 
-  // Delete car
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure to delete this car?")) return;
     try {
@@ -42,9 +38,7 @@ const MyListings = () => {
     }
   };
 
-  if (!user) {
-    return <p className="text-center mt-6">Please login to see your listings.</p>;
-  }
+  if (!user) return <p className="text-center mt-6">Please login to see your listings.</p>;
 
   return (
     <div className="max-w-5xl mx-auto p-6">
@@ -78,7 +72,6 @@ const MyListings = () => {
                   >
                     Delete
                   </button>
-                  {/* You can add Update button here later */}
                 </td>
               </tr>
             ))}
