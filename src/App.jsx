@@ -9,6 +9,7 @@ import MyListings from "./pages/MyListings";
 import MyBookings from "./pages/MyBookings";
 import BrowseCars from "./pages/BrowseCars";
 import CarDetails from "./pages/CarDetails";
+import UpdateCar from "./pages/UpdateCar";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./routes/PrivateRoute";
 
@@ -45,6 +46,12 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route 
+         path="/update-car/:id" 
+          element={
+           <PrivateRoute>
+              <UpdateCar />
+            </PrivateRoute>} />
         <Route
           path="/cars/:id"
           element={

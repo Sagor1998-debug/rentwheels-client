@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axiosInstance from "../api/axiosInstance";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const MyListings = () => {
   const { user } = useAuth();
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  const fetchMyCars = async () => {
+  // Fetch my cars
+  const fetchMyCars = useCallback(async () => {
     if (!user?.email) return;
     try {
       setLoading(true);
@@ -20,18 +23,19 @@ const MyListings = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.email]);
 
   useEffect(() => {
-    if (user?.email) fetchMyCars();
-  }, [user]);
+    fetchMyCars();
+  }, [fetchMyCars]);
 
+  // Delete car
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure to delete this car?")) return;
     try {
       await axiosInstance.delete(`/cars/${id}`);
       toast.success("Car deleted successfully!");
-      setCars(cars.filter((car) => car._id !== id));
+      setCars((prev) => prev.filter((car) => car._id !== id));
     } catch (error) {
       console.error("Deleting car failed:", error);
       toast.error(error.response?.data?.message || "Failed to delete car.");
@@ -71,6 +75,12 @@ const MyListings = () => {
                     className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
                   >
                     Delete
+                  </button>
+                  <button
+                    onClick={() => navigate(`/update-car/${car._id}`)}
+                    className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                  >
+                    Update
                   </button>
                 </td>
               </tr>
