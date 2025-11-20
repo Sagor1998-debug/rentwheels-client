@@ -1,16 +1,68 @@
-# React + Vite
+# RentWheels – Premium Car Rental Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site:** https://velvety-dolphin-ae7f57.netlify.app  
 
-Currently, two official plugins are available:
+**Client Repository:** https://github.com/Sagor1998-debug/rentwheels-client  
+**Server Repository:** https://github.com/Sagor1998-debug/rentwheels-server  
+**Backend Live API:** https://rentwheels-server-8.onrender.com  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![RentWheels Preview](https://i.ibb.co.com/0jZxK7h/rentwheels-preview.png)  
+*Modern & Fully Responsive UI built with Tailwind CSS + DaisyUI*
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Website Main Features
 
-## Expanding the ESLint configuration
+- **Secure User Authentication**  
+  Login/Signup with Email-Password & Google Sign-In using Firebase Authentication (Private routes protected).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Browse & Search Cars**  
+  Beautiful car cards with real images (Unsplash), category badges (Sedan/SUV/Luxury/Electric), price, location, and live availability status.
+
+- **Add, Update & Delete Your Cars**  
+  Authenticated users can add new cars, edit details (name, price, image, etc.), and delete their own listings anytime.
+
+- **My Listings & My Bookings**  
+  Private dashboard to manage your listed cars and view/cancel your booked cars.
+
+- **Car Details & Booking System**  
+  Detailed car page with large image, provider info, and "Book Now" button. Prevents double booking + shows success animation & toast.
+
+- **Fully Responsive & Modern UI**  
+  Perfect on mobile, tablet, and desktop. Powered by Tailwind CSS, DaisyUI, Framer Motion animations, Lottie, Lucide Icons.
+
+- **Real-time Feedback**  
+  React Hot Toast + SweetAlert2 for success/error/confirmation messages.
+
+---
+
+### Technology Stack
+
+**Frontend:**  
+React 19 • Vite • React Router v7 • Tailwind CSS • DaisyUI • Firebase Auth • Axios • Framer Motion • React Hot Toast • SweetAlert2 • Lucide React
+
+**Backend:**  
+Node.js • Express.js • MongoDB (Mongoose) • Firebase Admin SDK • Render Hosting
+
+**Deployment:**  
+Frontend → Netlify  
+Backend → Render
+
+---
+
+### Project Links
+
+- **Live Website:** https://velvety-dolphin-ae7f57.netlify.app
+- **Client GitHub:** https://github.com/Sagor1998-debug/rentwheels-client
+- **Server GitHub:** https://github.com/Sagor1998-debug/rentwheels-server
+- **Backend API:** https://rentwheels-server-8.onrender.com
+
+---
+
+### Local Setup (Client)
+
+```bash
+git clone https://github.com/Sagor1998-debug/rentwheels-client.git
+cd rentwheels-client
+npm install
+npm run dev
