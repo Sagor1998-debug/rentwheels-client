@@ -43,12 +43,12 @@ const CarDetails = () => {
     try {
       setBookingLoading(true);
 
-      // ✅ Get Firebase token
+      // Firebase token
       const auth = getAuth();
       const currentUser = auth.currentUser;
       const token = await currentUser.getIdToken(true); // refresh if expired
 
-      // ✅ Send booking request with Authorization header
+      // Send booking request with Authorization header
       const response = await axiosInstance.post(
         "/bookings",
         {

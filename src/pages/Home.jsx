@@ -41,7 +41,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-indigo-100 relative overflow-hidden">
-      {/* Luxury Animated Background Orbs */}
+      {/* Luxury Animated Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply blur-3xl opacity-40 animate-blob"></div>
         <div className="absolute top-40 -right-40 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
@@ -87,7 +87,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Why Rent With Us – Your Beautiful Section */}
+        {/* Why Rent With Us */}
         <section className="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 py-24 overflow-hidden">
           <div className="absolute inset-0">
             <div className="absolute top-20 left-20 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl" />
@@ -151,7 +151,7 @@ const Home = () => {
         </section>
       </div>
 
-      {/* Floating Orb Animation */}
+      {/*  */}
       <style jsx>{`
         @keyframes blob {
           0% { transform: translate(0px, 0px) scale(1); }
