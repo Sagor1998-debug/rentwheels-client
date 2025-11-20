@@ -1,146 +1,149 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import axiosInstance from "../api/axiosInstance";
+import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import { useParams, useNavigate } from "react-router-dom";
 
 const UpdateCar = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
 
-  const [carData, setCarData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [updating, setUpdating] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
+  const [carData, setCarData] = useState({
+    name: "",
+    description: "",
+    category: "Sedan",
+    rentPrice: "",
+    location: "",
+    imageUrl: "",
+  });
 
-  // Fetch single car by ID
+  // Fetch existing car data
   useEffect(() => {
     const fetchCar = async () => {
       try {
-        setLoading(true);
         const res = await axiosInstance.get(`/cars/${id}`);
-        setCarData(res.data);
+        setCarData({
+          name: res.data.name,
+          description: res.data.description || "",
+          category: res.data.category,
+          rentPrice: res.data.rentPrice,
+          location: res.data.location,
+          imageUrl: res.data.imageUrl,
+        });
       } catch (error) {
-        console.error("Fetching car failed:", error);
-        toast.error(error.response?.data?.message || "Failed to fetch car data.");
+        toast.error("Failed to load car data");
+        navigate("/my-listings");
       } finally {
-        setLoading(false);
+        setFetching(false);
       }
     };
     fetchCar();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleChange = (e) => {
     setCarData({ ...carData, [e.target.name]: e.target.value });
   };
 
-  const handleImageChange = (e) => {
-    setImageFile(e.target.files[0]);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!carData) return;
-
-    const formData = new FormData();
-    formData.append("name", carData.name);
-    formData.append("category", carData.category);
-    formData.append("rentPrice", carData.rentPrice);
-    formData.append("status", carData.status);
-    if (imageFile) formData.append("image", imageFile);
+    if (!user) return toast.error("Login required");
 
     try {
-      setUpdating(true);
-      await axiosInstance.put(`/cars/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      setLoading(true);
+      await axiosInstance.put(`/cars/${id}`, {
+        ...carData,
+        rentPrice: Number(carData.rentPrice),
       });
       toast.success("Car updated successfully!");
-      navigate("/my-listings"); // go back to listings page
+      navigate("/my-listings");
     } catch (error) {
-      console.error("Updating car failed:", error);
-      toast.error(error.response?.data?.message || "Failed to update car.");
+      toast.error("Failed to update car");
     } finally {
-      setUpdating(false);
+      setLoading(false);
     }
   };
 
-  if (loading) return <p>Loading car data...</p>;
-  if (!carData) return <p>Car not found.</p>;
+  if (fetching) return <div className="text-center py-20 text-2xl">Loading car...</div>;
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4 text-blue-600">Update Car</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-1">Car Name</label>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 py-12">
+      <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
+        <h2 className="text-4xl font-bold text-center text-purple-700 mb-8">Update Car</h2>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
           <input
             type="text"
             name="name"
             value={carData.name}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full px-5 py-4 border border-gray-300 rounded-lg text-lg"
             required
           />
-        </div>
-
-        <div>
-          <label className="block mb-1">Category</label>
-          <input
-            type="text"
+          <textarea
+            name="description"
+            value={carData.description}
+            onChange={handleChange}
+            rows="3"
+            className="w-full px-5 py-4 border border-gray-300 rounded-lg text-lg"
+          />
+          <select
             name="category"
             value={carData.category}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1">Rent Price</label>
+            className="w-full px-5 py-4 border border-gray-300 rounded-lg text-lg"
+          >
+            <option>Sedan</option>
+            <option>SUV</option>
+            <option>Hatchback</option>
+            <option>Luxury</option>
+            <option>Electric</option>
+          </select>
           <input
             type="number"
             name="rentPrice"
             value={carData.rentPrice}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full px-5 py-4 border border-gray-300 rounded-lg text-lg"
             required
           />
-        </div>
-
-        <div>
-          <label className="block mb-1">Status</label>
-          <select
-            name="status"
-            value={carData.status}
+          <input
+            type="text"
+            name="location"
+            value={carData.location}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
-          >
-            <option value="Available">Available</option>
-            <option value="Booked">Booked</option>
-          </select>
-        </div>
+            className="w-full px-5 py-4 border border-gray-300 rounded-lg text-lg"
+            required
+          />
+          <input
+            type="text"
+            name="imageUrl"
+            value={carData.imageUrl}
+            onChange={handleChange}
+            className="w-full px-5 py-4 border border-gray-300 rounded-lg text-lg"
+            required
+          />
 
-        <div>
-          <label className="block mb-1">Image (optional)</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-        </div>
-
-        <div className="flex justify-end space-x-2 mt-4">
-          <button
-            type="button"
-            onClick={() => navigate("/my-listings")}
-            className="px-4 py-2 rounded border hover:bg-gray-100"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            disabled={updating}
-            className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700"
-          >
-            {updating ? "Updating..." : "Update Car"}
-          </button>
-        </div>
-      </form>
+          <div className="flex gap-4">
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-1 bg-green-600 text-white py-4 rounded-lg text-xl font-bold hover:bg-green-700 disabled:bg-gray-400"
+            >
+              {loading ? "Updating..." : "Update Car"}
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/my-listings")}
+              className="flex-1 bg-gray-600 text-white py-4 rounded-lg text-xl font-bold hover:bg-gray-700"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
