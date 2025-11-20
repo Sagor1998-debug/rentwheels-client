@@ -3,6 +3,7 @@ import { getAuth } from "firebase/auth";
 
 const axiosInstance = axios.create({
   baseURL: "https://rentwheels-server-8.onrender.com/api",
+  
 });
 
 axiosInstance.interceptors.request.use(async (config) => {
